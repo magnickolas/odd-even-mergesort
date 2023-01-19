@@ -3,7 +3,7 @@ add_executable(batcher_sort
 set_target_properties(batcher_sort PROPERTIES
   RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 target_include_directories(batcher_sort PRIVATE
-  ../include)
+  ../include ../lib)
 target_compile_features(
   batcher_sort PRIVATE
   cxx_std_20)
