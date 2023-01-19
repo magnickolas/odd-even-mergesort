@@ -16,9 +16,9 @@ Options Options::parse(int argc, char** argv) {
         std::cout << options.help() << std::endl;
         exit(0);
     }
-    Options opts;
-    opts.n = result["n"].as<uint32_t>();
-    opts.seed = result["seed"].as<uint32_t>();
-    opts.debug = result["debug"].as<bool>();
-    return opts;
+    return {
+        .n = result["n"].as<uint32_t>(),
+        .seed = result["seed"].as<uint32_t>(),
+        .debug = result["debug"].as<bool>(),
+    };
 };
