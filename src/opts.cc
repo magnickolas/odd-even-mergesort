@@ -12,14 +12,13 @@ Options Options::parse(int argc, char** argv) {
         ("h,help", "Print usage");
     options.parse_positional("n");
     auto result = options.parse(argc, argv);
+    if (result.count("help")) {
+        std::cout << options.help() << std::endl;
+        exit(0);
+    }
     Options opts;
     opts.n = result["n"].as<uint32_t>();
     opts.seed = result["seed"].as<uint32_t>();
     opts.debug = result["debug"].as<bool>();
-    opts.help = result["help"].as<bool>();
-    if (opts.help) {
-        std::cout << options.help() << std::endl;
-        exit(0);
-    }
     return opts;
 };
