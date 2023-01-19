@@ -1,0 +1,46 @@
+#version 460
+#include "defs.h"
+
+layout(local_size_x = TILE_SIZE, local_size_y = 1, local_size_z = 1) in;
+
+layout(set = 0, binding = 0) buffer Arr {
+  TYPE buf[];
+} a;
+
+layout(push_constant) uniform PushConstants {
+  uint n;
+  uint stride;
+  uint stride_trailing_zeros;
+  uint inner_reminder;
+  uint inner_last_idx;
+};
+
+bool is_left_index(uint i) {
+  uint inner_i = i >> stride_trailing_zeros;
+  return (inner_i & 1) == inner_reminder &&
+       (inner_i & inner_last_idx) < inner_last_idx;
+}
+
+uint get_right_index(uint i) {
+  return i + stride;
+}
+
+/* Assumes that i < j */
+void compare_and_exchange(uint i, uint j) {
+  if (j < n && a.buf[i] > a.buf[j]) {
+    TYPE t = a.buf[i];
+    a.buf[i] = a.buf[j];
+    a.buf[j] = t;
+  }
+}
+
+void main() {
+  uint i = gl_GlobalInvocationID.x;
+  if (i >= n) {
+      return;
+  }
+  if (is_left_index(i)) {
+    uint j = get_right_index(i);
+    compare_and_exchange(i, j);
+  }
+}
