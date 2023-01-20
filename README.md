@@ -12,6 +12,11 @@ cmake --build .
 ./batcher_sort -h
 ```
 
+Dependencies:
+
+- Vulkan
+- glslc from https://github.com/google/shaderc
+
 ## Notes
 
 Should only be used for educational purposes.
