@@ -26,7 +26,7 @@ uint get_right_index(uint i) {
 }
 
 /* Assumes that i < j */
-void compare_and_exchange(uint i, uint j) {
+void compare_and_swap(uint i, uint j) {
   if (j < n && a.buf[i] > a.buf[j]) {
     TYPE t = a.buf[i];
     a.buf[i] = a.buf[j];
@@ -41,6 +41,6 @@ void main() {
   }
   if (is_left_index(i)) {
     uint j = get_right_index(i);
-    compare_and_exchange(i, j);
+    compare_and_swap(i, j);
   }
 }
