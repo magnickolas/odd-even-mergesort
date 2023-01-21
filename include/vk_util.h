@@ -114,7 +114,7 @@ void destroy_array_storage(const Array<CTYPE>& arr, VkInfo* vk_info);
 
 struct VkInfoGuard {
     VkInfo info;
-    VkInfoGuard(uint32_t n, uint32_t seed);
+    VkInfoGuard();
     VkInfo* get();
     ~VkInfoGuard();
 };

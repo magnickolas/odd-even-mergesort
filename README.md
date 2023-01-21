@@ -16,6 +16,7 @@ Dependencies:
 
 - Vulkan
 - glslc from https://github.com/google/shaderc
+- xxd for embedding the compiled shader
 
 ## Notes
 

@@ -5,8 +5,12 @@
 int main(int argc, char* argv[]) {
     auto opts = Options::parse(argc, argv);
 
-    auto guard = VkInfoGuard{opts.n, opts.seed};
+    auto guard = VkInfoGuard{};
     auto info = guard.get();
+
+    // prepare an array storage
+    info->arr = create_array_storage(opts.n, info);
+    info->arr.fill_random(opts.seed);
 
     // Create a copy of the array for CPU to sort for
     // benchmark comparison and verifying correctness

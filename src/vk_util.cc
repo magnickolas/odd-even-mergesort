@@ -489,12 +489,9 @@ void destroy_array_storage(const Array<CTYPE>& arr, VkInfo* vk_info) {
     vkFreeMemory(vk_info->device, arr.get_device_memory(), NULL);
 }
 
-VkInfoGuard::VkInfoGuard(uint32_t n, uint32_t seed) {
+VkInfoGuard::VkInfoGuard() {
     set_instance(&info);
     set_physical_device(&info);
-
-    info.arr = create_array_storage(n, &info);
-    info.arr.fill_random(seed);
 }
 VkInfo* VkInfoGuard::get() { return &info; }
 VkInfoGuard::~VkInfoGuard() { destroy(&info); }

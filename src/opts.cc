@@ -3,7 +3,8 @@
 #include <cstdint>
 
 Options Options::parse(int argc, char** argv) {
-    cxxopts::Options options("Batcher Sort", "Sort an array of integers");
+    cxxopts::Options options("batcher_sort",
+                             "Sort an array of integers on GPU and CPU");
     options.add_options()("n", "Array length",
                           cxxopts::value<uint32_t>()) //
         ("s,seed", "Random seed",
