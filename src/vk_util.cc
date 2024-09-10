@@ -13,6 +13,20 @@ static const std::vector<const char*> validation_layers = {
 #endif
 };
 
+static const std::vector<const char*> extensions = {
+#if __APPLE__ // enable extension to use MoltenVK
+    "VK_KHR_portability_enumeration"
+#endif
+};
+
+constexpr VkInstanceCreateFlagBits instance_create_flag_bits =
+#if __APPLE__ // set flag to use MoltenVK
+    VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR
+#else
+    0
+#endif
+    ;
+
 #if DEBUG
 static VKAPI_ATTR VkBool32 VKAPI_CALL
 debug_callback(VkDebugUtilsMessageSeverityFlagBitsEXT messageSeverity,
@@ -60,12 +74,12 @@ void set_instance(VkInfo* vk_info) {
     VkInstanceCreateInfo create_info = {
         .sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO,
         .pNext = NULL,
-        .flags = 0,
+        .flags = instance_create_flag_bits,
         .pApplicationInfo = &app_info,
         .enabledLayerCount = static_cast<uint32_t>(validation_layers.size()),
         .ppEnabledLayerNames = validation_layers.data(),
-        .enabledExtensionCount = 0,
-        .ppEnabledExtensionNames = NULL,
+        .enabledExtensionCount = static_cast<uint32_t>(extensions.size()),
+        .ppEnabledExtensionNames = extensions.data(),
     };
 #if DEBUG
     VkDebugUtilsMessengerCreateInfoEXT debug_create_info = {
