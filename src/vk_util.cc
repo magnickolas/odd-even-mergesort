@@ -23,7 +23,7 @@ constexpr VkInstanceCreateFlagBits instance_create_flag_bits =
 #if __APPLE__ // set flag to use MoltenVK
     VK_INSTANCE_CREATE_ENUMERATE_PORTABILITY_BIT_KHR
 #else
-    0
+    static_cast<VkInstanceCreateFlagBits>(0)
 #endif
     ;
 
